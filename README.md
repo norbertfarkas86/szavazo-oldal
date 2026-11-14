@@ -1,26 +1,55 @@
 # Szülői Bál 2027 – Cloudflare Pages + D1
 
-A korábbi szavazóoldal áttervezett változata a megadott báli plakát színvilágával és felépítésével.
+## A változtatás
 
-## Oldalak
-- `/` – nyitóoldal, négy kattintható nyilas kártyával
-- `/program.html` – az est programja
-- `/vacsora.html` – gálavacsora
-- `/jegyek.html` – regisztrációs jegyek
-- `/celjaink.html` – közös célok, A/B/C szavazás és eredmények
+A `/celjaink.html` oldal négy konkrét támogatási célt jelenít meg, A/B/C/D opciókkal és szavazati eredményekkel.
+A `/szavazas.html` régi cím a Közös céljaink oldalra irányít.
 
-A `/szavazas.html` továbbra is működik. A régi `/informaciok.html` és `/gyik.html` átirányítást tartalmaz.
+## FONTOS: meglévő D1 adatbázis migrálása
 
-## Deploy (meglévő Pages projekt)
-1. A projekt gyökerében: `git add . && git commit -m "Szülői Bál arculat"`.
-2. Feltöltés: `GIT_SSH_COMMAND="ssh -o IdentityAgent=none -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519" git push origin main`.
-3. Cloudflare Pages build output directory: `public`, build command üres.
-4. `Settings → Bindings`: a `DB` D1 binding maradjon a `szavazas-db` adatbázison.
-5. **Ne futtasd újra törléssel a schema.sql-t**, a meglévő `votes` táblát és szavazatokat meghagyjuk.
+A korábbi `votes` táblában `CHECK (choice IN ('A','B','C'))` megszorítás van. A **D** opció mentéséhez a tábla átalakítása kötelező. A korábbi szavazatok megmaradnak.
 
-A backend forrása `functions/api/vote.js` nem változott. Az API `/api/vote` ugyanaz; új adatbázis nem szükséges.
+1. Mielőtt bármit módosítasz, készíts mentést a Cloudflare D1 adatbázisról (Dashboard / D1 / Backups, vagy Wrangler export).
+2. Győződj meg róla, hogy a megfelelő `szavazas-db` adatbázist választottad ki.
+3. A projekt gyökerében futtasd (Node.js/npm szükséges):
 
-## Egyedi tartalom
-A képen szereplő dátum, helyszín és leírás szerepel. Program/menü/jegyinformáció nem volt megadva, ezért ezeknél egyértelmű tájékoztató helyőrzők maradtak. Az A/B/C opciókat a `public/celjaink.html` és `public/szavazas.html` fájlban lehet átnevezni; az A/B/C `value` értékeket ne módosítsd, mert a backend és az adatbázis ezeket tárolja.
+   ```bash
+   npx wrangler login
+   npx wrangler d1 execute szavazas-db --remote --file=./migration-4-options.sql
+   ```
 
-A plakátból kivágott kép felhasználásával készültek a helyi webes illusztrációk (`public/assets`). A weboldal nem hivatkozik külső képfájlokra; a Google Fonts viszont hálózati betöltést használ.
+4. Ellenőrizd:
+
+   ```sql
+   SELECT COUNT(*) AS total FROM votes;
+   SELECT sql FROM sqlite_master WHERE name='votes';
+   ```
+
+   Az új `CHECK` az `A`, `B`, `C`, `D` értékeket fogadja.
+
+5. A GitHubra feltöltés után a Cloudflare Pages automatikusan deployolja az új frontend és API fájlokat. Ellenőrizd: `https://szavazo-oldal.pages.dev/api/vote`, ahol a `counts` objektumban már `D` is szerepel.
+
+**Megjegyzés:** a már meglévő A/B/C szavazatok nem kapnak automatikusan új értelmezést. Ha a korábbi A/B/C mintaszavazatok voltak, éles szavazás előtt külön döntsd el, törölni akarod-e őket. A migráció nem törli őket.
+
+## Feltöltés a GitHubra
+
+Másold a ZIP `szavazo-bal` mappájának tartalmát a meglévő repository gyökerébe, majd:
+
+```bash
+git add public/celjaink.html public/szavazas.html public/vote.js public/style.css functions/api/vote.js schema.sql migration-4-options.sql README.md
+git commit -m "Negy tamogatasi cel es szavazas"
+GIT_SSH_COMMAND="ssh -o IdentityAgent=none -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519" git push origin main
+```
+
+A Pages build output mappa továbbra is `public`, a D1 binding neve `DB`.
+
+## Projektfájlok
+
+- `public/celjaink.html`: támogatási célok, szavazás, eredmények
+- `public/style.css`: teljes arculat
+- `public/vote.js`: szavazási kliens
+- `functions/api/vote.js`: szerveroldali szavazási API
+- `migration-4-options.sql`: meglévő D1 séma biztonságos átalakítása (mentést követően)
+- `schema.sql`: új adatbázishoz használt séma
+
+Egy böngészősütivel működő szavazási korlátozás nem jelent teljes visszaélésvédelmet.

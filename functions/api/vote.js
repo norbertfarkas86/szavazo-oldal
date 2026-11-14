@@ -1,4 +1,4 @@
-const allowed = new Set(['A', 'B', 'C']);
+const allowed = new Set(['A', 'B', 'C', 'D']);
 const cookieName = 'poll_voter';
 const headers = { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' };
 
@@ -14,7 +14,7 @@ function json(data, status = 200, extra = {}) {
 export async function onRequestGet({ env, request }) {
   try {
     const { results } = await env.DB.prepare('SELECT choice, COUNT(*) AS count FROM votes GROUP BY choice').all();
-    const counts = { A: 0, B: 0, C: 0 };
+    const counts = { A: 0, B: 0, C: 0, D: 0 };
     for (const row of results) counts[row.choice] = Number(row.count);
     let voted = false;
     const token = getCookie(request);
@@ -22,7 +22,7 @@ export async function onRequestGet({ env, request }) {
       const existing = await env.DB.prepare('SELECT 1 FROM votes WHERE voter_token = ? LIMIT 1').bind(token).first();
       voted = !!existing;
     }
-    return json({ counts, total: counts.A + counts.B + counts.C, voted });
+    return json({ counts, total: counts.A + counts.B + counts.C + counts.D, voted });
   } catch (error) {
     console.error(error);
     return json({ error: 'Nem sikerült lekérni az eredményeket.' }, 500);
@@ -42,7 +42,7 @@ export async function onRequestPost({ env, request }) {
     if (raw.length > 1024) return json({ error: 'Túl nagy kérés.' }, 413);
     let body;
     try { body = JSON.parse(raw); } catch { return json({ error: 'Hibás JSON.' }, 400); }
-    if (!allowed.has(body?.choice)) return json({ error: 'A, B vagy C választható.' }, 400);
+    if (!allowed.has(body?.choice)) return json({ error: 'A, B, C vagy D választható.' }, 400);
     const newToken = crypto.randomUUID();
     await env.DB.prepare('INSERT INTO votes (choice, voter_token) VALUES (?, ?)').bind(body.choice, newToken).run();
     return json({ ok: true }, 201, {
