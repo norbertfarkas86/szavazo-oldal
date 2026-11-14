@@ -1,31 +1,26 @@
-# Szavazóoldal – Cloudflare Pages + D1
+# Szülői Bál 2027 – Cloudflare Pages + D1
 
-Négy statikus oldal, egy Pages Function API és egy D1 adatbázis.
+A korábbi szavazóoldal áttervezett változata a megadott báli plakát színvilágával és felépítésével.
 
-## Lépések
+## Oldalak
+- `/` – nyitóoldal, négy kattintható nyilas kártyával
+- `/program.html` – az est programja
+- `/vacsora.html` – gálavacsora
+- `/jegyek.html` – regisztrációs jegyek
+- `/celjaink.html` – közös célok, A/B/C szavazás és eredmények
 
-1. Hozz létre egy GitHub repositoryt, és töltsd fel a projekt teljes tartalmát a repository gyökerébe.
-2. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git. Válaszd a repositoryt.
-3. Framework preset: None; build command: üres; output directory: `public`. Production branch: `main`.
-4. Cloudflare Dashboard → D1 SQL Database → Create database, név: `szavazas-db`.
-5. A D1 Console felületén futtasd a `schema.sql` teljes tartalmát (vagy Wrangler CLI-val: `npx wrangler d1 execute szavazas-db --remote --file=./schema.sql`).
-6. Workers & Pages → Pages projekt → Settings → Bindings → Add → D1 database. Variable name: `DB`; D1 database: `szavazas-db`.
-7. Indíts új production deploymentet, hogy a binding aktív legyen.
-8. Nyisd meg a `https://<projekt>.pages.dev/szavazas.html` címet és szavazz.
+A `/szavazas.html` továbbra is működik. A régi `/informaciok.html` és `/gyik.html` átirányítást tartalmaz.
 
-## Eredmények ellenőrzése
+## Deploy (meglévő Pages projekt)
+1. A projekt gyökerében: `git add . && git commit -m "Szülői Bál arculat"`.
+2. Feltöltés: `GIT_SSH_COMMAND="ssh -o IdentityAgent=none -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519" git push origin main`.
+3. Cloudflare Pages build output directory: `public`, build command üres.
+4. `Settings → Bindings`: a `DB` D1 binding maradjon a `szavazas-db` adatbázison.
+5. **Ne futtasd újra törléssel a schema.sql-t**, a meglévő `votes` táblát és szavazatokat meghagyjuk.
 
-A Cloudflare D1 Console-ban:
+A backend forrása `functions/api/vote.js` nem változott. Az API `/api/vote` ugyanaz; új adatbázis nem szükséges.
 
-```sql
-SELECT choice, COUNT(*) AS votes FROM votes GROUP BY choice ORDER BY choice;
-```
+## Egyedi tartalom
+A képen szereplő dátum, helyszín és leírás szerepel. Program/menü/jegyinformáció nem volt megadva, ezért ezeknél egyértelmű tájékoztató helyőrzők maradtak. Az A/B/C opciókat a `public/celjaink.html` és `public/szavazas.html` fájlban lehet átnevezni; az A/B/C `value` értékeket ne módosítsd, mert a backend és az adatbázis ezeket tárolja.
 
-## Tudnivalók
-
-- A cookie alapú egyszeri szavazás böngészőnként működik, nem bizonyít személyazonosságot. A sütik törlésével új szavazat adható le.
-- Erős visszaélés-védelemhez Turnstile, sebességkorlátozás vagy hitelesítés kell.
-- A `schema.sql` futtatása szükséges az első szavazás előtt.
-- A `functions` mappa nem a `public` mappában van.
-- Ne publikálj személyes adatot; a példa csak a választást, egy véletlen tokenazonosítót és időpontot tárol.
-- Érdemes rendszeresen exportálni a D1 adatbázisodat.
+A plakátból kivágott kép felhasználásával készültek a helyi webes illusztrációk (`public/assets`). A weboldal nem hivatkozik külső képfájlokra; a Google Fonts viszont hálózati betöltést használ.
