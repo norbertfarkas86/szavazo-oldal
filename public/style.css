@@ -5,3 +5,36 @@
 @media(max-width:860px){.hero{min-height:0;grid-template-columns:1fr 42%}.hero-copy{padding:72px 12px 55px 18px}.event-title{font-size:83px}.event-title span{font-size:74px}.hero-photo{min-height:610px;background-position:49% center}.nav-card{min-height:242px}.nav-card h2{font-size:20px}.nav-cards{padding:0 18px;gap:8px}}
 @media(max-width:640px){.site-shell{margin:0 auto 12px;width:100%;border-left:0;border-right:0}.site-shell::before{inset:7px}.hero{grid-template-columns:1fr}.hero-copy{padding:65px 26px 36px}.hero-photo{min-height:340px;background-position:center 35%}.event-title{font-size:103px}.event-title span{font-size:86px}.nav-cards{grid-template-columns:repeat(2,1fr);margin-top:0;padding:14px;gap:12px}.nav-card{min-height:245px}.nav-card h2{font-size:21px}.closing{padding:22px 20px 32px}.slogan{font-size:12px;letter-spacing:.06em}.slogan b{margin:0 5px}.paper-panel{padding:20px}.inner-header{padding:25px 18px}.inner-hero{padding-top:40px}.nav-card p{font-size:13px}}
 @media(max-width:370px){.nav-cards{grid-template-columns:1fr}.nav-card{min-height:200px}.event-title{font-size:80px}.event-title span{font-size:67px}}
+
+/* Az est programja – a nyomtatott meghívó arculata */
+.program-page{background:#f4ede1;font-family:'Playfair Display',Georgia,serif;color:var(--navy-deep)}
+.program-shell{max-width:1010px;margin:18px auto 28px;min-height:100vh;background:radial-gradient(ellipse at 50% 25%,#fffef9 0%,#fffaf1 70%,#fcf4e5 100%);border:2px solid #bf8b29;box-shadow:0 18px 55px rgba(37,28,15,.1);overflow:hidden;position:relative}
+.program-shell::before{inset:17px;border:1.5px solid #bf8b29;z-index:0}
+.program-shell::after{content:'';position:absolute;right:-45px;bottom:55px;width:225px;height:265px;background:url('/assets/level-disz.webp') center/contain no-repeat;transform:rotate(180deg);opacity:.65;pointer-events:none}
+.program-heading{position:relative;text-align:center;padding:31px 44px 4px;isolation:isolate}
+.program-heading::before{content:'';position:absolute;top:-24px;left:-22px;width:220px;height:220px;background:url('/assets/level-disz.webp') center/contain no-repeat;transform:rotate(-8deg);pointer-events:none;opacity:.9;z-index:-1}
+.program-heading::after{content:'♡';position:absolute;right:38px;top:28px;font-family:Georgia,serif;font-size:105px;font-weight:400;line-height:1;color:#be8222;transform:rotate(17deg);pointer-events:none;opacity:.93;z-index:-1}
+.program-home{position:absolute;top:30px;right:34px;font:600 12px 'Inter',sans-serif;text-decoration:none;color:var(--navy);border-bottom:1px solid var(--gold);padding:3px 0;z-index:2}
+.program-home:hover{color:var(--burgundy)}
+.program-overline{margin:3px auto 0;display:flex;align-items:center;justify-content:center;gap:22px;max-width:580px;color:#0b174c;text-transform:uppercase;font-size:clamp(14px,2.3vw,23px);font-weight:600;letter-spacing:.24em;line-height:1.2}
+.program-overline::before,.program-overline::after{content:'';width:110px;max-width:15%;height:1px;background:#b47d22;flex:0 1 110px}
+.program-diamond{display:block;color:#cb8e00;font-size:22px;line-height:1;margin:8px auto 0}
+.program-heading h1{font:700 clamp(46px,8.4vw,92px)/1.07 'Playfair Display',Georgia,serif;letter-spacing:-.045em;color:#080d4b;margin:7px 0 13px}
+.program-date{font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:clamp(14px,2.5vw,23px);margin:0;color:#11184e}
+.program-location{font-size:clamp(18px,2.5vw,28px);margin:-2px 0 13px;line-height:1.45;color:#11184e}
+.program-heart-divider{height:23px;display:flex;align-items:center;gap:9px;color:#c18a1b;font-size:29px;line-height:1}
+.program-heart-divider::before,.program-heart-divider::after{content:'';height:1px;background:#c18a1b;flex:1}
+.program-heart-divider span{transform:translateY(-2px)}
+.program-agenda{position:relative;margin:3px 56px 26px}
+.agenda-item{display:grid;grid-template-columns:205px 1fr;gap:0;position:relative;border-bottom:1px solid #c18a1b;padding:20px 0 23px}
+.agenda-item:last-child{border-bottom:0}
+.agenda-item:not(:last-child)::after{content:'◆';position:absolute;left:50%;bottom:0;transform:translate(-50%,55%);font-size:21px;color:#cc9208;background:#fffaf1;line-height:1;padding:0 9px}
+.agenda-item time{font:700 clamp(38px,5.5vw,59px)/1.2 'Playfair Display',Georgia,serif;color:#080d4b;letter-spacing:-.06em;padding:3px 18px 0 0;white-space:nowrap}
+.agenda-description{border-left:2px solid #c28a2a;padding-left:42px;padding-right:2px;min-width:0}
+.agenda-description h2{font:700 clamp(25px,3.6vw,37px)/1.13 'Playfair Display',Georgia,serif;color:#070e48;letter-spacing:-.035em;margin:0 0 3px}
+.agenda-description h3{font:700 clamp(21px,2.8vw,28px)/1.15 'Playfair Display',Georgia,serif;margin:8px 0 0;color:#0b124a}
+.agenda-description p{font:400 clamp(16px,2.15vw,22px)/1.34 'Playfair Display',Georgia,serif;margin:3px 0 0;color:#101b50}
+.program-bottom-nav{position:relative;z-index:1;margin:26px 45px 15px}
+.program-shell .site-footer{position:relative;z-index:1;padding-bottom:35px}
+@media(max-width:700px){.program-shell{margin:0 auto 12px;width:100%;border:0}.program-shell::before{inset:8px}.program-heading{padding:72px 25px 0}.program-heading::before{width:155px;height:170px;left:-23px;top:-17px}.program-heading::after{font-size:67px;right:15px;top:53px;opacity:.5}.program-home{right:25px;top:22px}.program-overline{letter-spacing:.12em;gap:10px}.program-heading h1{font-size:clamp(43px,10vw,68px);margin-top:13px}.program-date{letter-spacing:.08em}.program-agenda{margin:2px 23px 20px}.agenda-item{grid-template-columns:1fr;padding:19px 5px 22px}.agenda-item time{font-size:35px;margin-bottom:8px;padding:0}.agenda-description{border-left:2px solid #c28a2a;padding-left:17px}.agenda-description h2{font-size:27px}.agenda-description h3{font-size:22px}.agenda-description p{font-size:17px}.program-bottom-nav{margin:20px 22px}.program-shell::after{width:140px;height:180px;opacity:.3}}
+@media(max-width:380px){.program-heading h1{font-size:41px}.program-overline{font-size:13px}.program-date{font-size:13px}.program-agenda{margin-left:18px;margin-right:18px}}
