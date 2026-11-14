@@ -1,0 +1,2 @@
+import { InnerPage } from '../components/Layout.jsx';
+export default function Dinner(){return <InnerPage heading="Gálavacsora – az est ízei" intro="Ünnepi hangulat és közös vacsora a Szülői Bálon." kicker="Gálavacsora"><h2>Ünnepi asztal mellett</h2><p>A menüsor és a kapcsolódó részletek később kerülnek kihirdetésre.</p><div className="callout">Az ételallergiával, különleges étrenddel és az étkezéssel kapcsolatos információkat a szervezőktől lehet majd megtudni.</div></InnerPage>}

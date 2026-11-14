@@ -1,0 +1,8 @@
+# KIZÁRÓLAG HELYI fejlesztéshez. Éles deployhoz a Cloudflare Dashboard D1 bindingját használd.
+name = "szavazo-oldal-local"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-11-14"
+[[d1_databases]]
+binding = "DB"
+database_name = "szavazas-db"
+database_id = "00000000-0000-0000-0000-000000000000"

@@ -1,0 +1,2 @@
+import { InnerPage } from '../components/Layout.jsx';
+export default function Tickets(){return <InnerPage heading="Regisztrációs jegyek" intro="Tudnivalók a részvételről és a regisztrációról." kicker="Részvétel"><h2>Regisztrációs információk</h2><p>A jegyek ára, a regisztráció módja és a határidők még nincsenek megadva.</p><div className="callout">Amint a részletek véglegesek, ezen az oldalon jelennek meg. Itt még nincs aktív jegyvásárlási lehetőség.</div></InnerPage>}
