@@ -7,3 +7,10 @@ dist/
 .DS_Store
 
 wrangler.toml
+
+/github
+/github.pub
+wrangler.jsonc
+.dev.vars
+.dev.vars.*
+/node_modules

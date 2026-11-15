@@ -1,0 +1,13 @@
+{
+  // Másold wrangler.jsonc néven. Éles telepítéskor a tényleges D1-adatbázis azonosítóját add meg.
+  "name": "szavazo-oldal",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-11-14",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "szavazas-db",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}

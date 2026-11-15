@@ -1,15 +1,15 @@
 {
-  "name": "szuloi-bal-react-vite",
+  "name": "szuloi-bal-2027",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1",
+    "build:site": "npm run build && node scripts/build-site-worker.mjs",
+    "preview": "vite preview --host 0.0.0.0",
     "dev:api": "wrangler pages dev dist --port 8788",
-    "db:init": "wrangler d1 execute szavazas-db --config wrangler.local.toml --local --file ./schema.sql",
-    "db:check": "wrangler d1 execute szavazas-db --config wrangler.local.toml --local --command \"SELECT choice, COUNT(*) AS votes FROM votes GROUP BY choice\""
+    "db:init": "wrangler d1 execute szavazas-db --config wrangler.local.toml --local --file ./schema.sql"
   },
   "dependencies": {
     "react": "^19.2.0",

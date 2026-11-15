@@ -1,7 +1,8 @@
-# KIZÁRÓLAG HELYI fejlesztéshez. Éles deployhoz a Cloudflare Dashboard D1 bindingját használd.
+# Csak helyi fejlesztéshez. Az éles D1-kötést a Cloudflare Pages felületén add meg.
 name = "szavazo-oldal-local"
 pages_build_output_dir = "./dist"
 compatibility_date = "2026-11-14"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "szavazas-db"

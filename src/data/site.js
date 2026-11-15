@@ -1,9 +1,9 @@
 export const EVENT = {title: 'Szülői Bál', year: '2027', date: '2027. február 20.', time:'19:00', venue:'Novotel Szeged'};
 export const navigation = [
- {path:'/program.html', title:'Az est részletes programja',subtitle:'Ismerje meg az est tervezett programját!',icon:'▦',style:'card-program',short:'Program'},
- {path:'/vacsora.html',title:'Gálavacsora – az est ízei',subtitle:'Ünnepi vacsora és közös élmények.',icon:'♧',style:'card-dinner',short:'Gálavacsora'},
- {path:'/jegyek.html',title:'Regisztrációs jegyek',subtitle:'Részvételi és regisztrációs tudnivalók.',icon:'◇',style:'card-tickets',short:'Jegyek'},
- {path:'/celjaink.html',title:'Közös céljaink',subtitle:'Döntsük el közösen, mit támogassunk!',icon:'♡',style:'card-goals',short:'Közös céljaink'},
+ {path:'/program.html', title:'Az est részletes programja', cardTitle:['Az est', 'részletes programja'], icon:'▦',style:'card-program',short:'Program'},
+ {path:'/vacsora.html',title:'Gálavacsora az est ízei', cardTitle:['Gálavacsora', 'az est ízei'], icon:'♧',style:'card-dinner',short:'Gálavacsora'},
+ {path:'/jegyek.html',title:'Regisztrációs jegyek',icon:'◇',style:'card-tickets',short:'Jegyek'},
+ {path:'/celjaink.html',title:'Közös céljaink',subtitle:'Ismerje meg a Szülői Bál bevételéből támogatni kívánt célokat. Döntsük el közösen!',icon:'♡',style:'card-goals',short:'Közös céljaink'},
 ];
 export const agenda = [
  {time:'19:00', title:'Vendégfogadás',text:'Welcome drink, régi ismerősök, új találkozások és kötetlen beszélgetések – hangolódjunk együtt az estére!'},
