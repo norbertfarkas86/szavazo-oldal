@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { SiteLayout } from './components/Layout.jsx';
-import { Home, Program, Dinner, Tickets, Goals, NotFound } from './pages/Pages.jsx';
+import { Home, Program, Dinner, Tickets, Goals, VotePage, NotFound } from './pages/Pages.jsx';
 import './styles.css';
 
 function ScrollToTop() {
@@ -21,6 +21,7 @@ function App() {
         <Route path="/vacsora.html" element={<Dinner />} />
         <Route path="/jegyek.html" element={<Tickets />} />
         <Route path="/celjaink.html" element={<Goals />} />
+        <Route path="/szavazas" element={<VotePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </SiteLayout>

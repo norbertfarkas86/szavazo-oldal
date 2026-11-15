@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { EVENT, navigation, agenda, goals } from '../data/site.js';
 import { Flourish, PageHeading, PageEndLink } from '../components/Layout.jsx';
 import { NavIcon } from '../components/NavIcon.jsx';
+import GoalIcon from '../components/GoalIcon.jsx';
 import { Voting } from '../components/Voting.jsx';
 
 const iconTypes = ['program', 'dinner', 'tickets', 'goals'];
@@ -108,12 +109,23 @@ export function Goals() {
       <p className="goals-intro">A báli este folyamán QR-kódos online szavazással közösen dönthetünk arról, hogy a felajánlott támogatás mely cél megvalósítását szolgálja elsősorban.</p>
       <h2 className="goals-heading">Javasolt támogatási célok</h2>
       <div className="goal-list">{goals.map((goal, index) => <article className={`goal-item goal-item--${goal.color}`} key={goal.id}>
-        <span className="goal-number">{String(index + 1).padStart(2, '0')}</span>
+        <span className="goal-icon"><GoalIcon id={goal.id} /></span>
+        <span className="goal-number">{index + 1}.</span>
         <div><h3>{goal.title}</h3><p>{goal.description}</p></div>
       </article>)}</div>
       <p className="goals-quote">Minél több támogatás gyűlik össze,<br />annál több közös célunk válhat valóra!</p>
       <Flourish />
-      <Voting />
+    </div>
+  </div>;
+}
+
+export function VotePage() {
+  const token = useLocation().hash.slice(1);
+  const validToken = /^[A-Za-z0-9_-]{43}$/.test(token);
+  return <div className="inner-page">
+    <PageHeading title="Szavazás" script="Legyen részese a döntésnek!" />
+    <div className="narrow-content">
+      {validToken ? <Voting key={token} accessToken={token} /> : <p className="vote-access-message" role="alert">A szavazás az eseményen kihelyezett QR-kód beolvasásával érhető el.</p>}
     </div>
   </div>;
 }

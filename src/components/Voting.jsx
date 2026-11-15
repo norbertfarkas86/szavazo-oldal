@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { goals } from '../data/site.js';
 
-async function requestResults() {
-  const response = await fetch('/api/vote', { cache: 'no-store', credentials: 'same-origin' });
+async function requestResults(accessToken) {
+  const response = await fetch('/api/vote', {
+    cache: 'no-store', credentials: 'same-origin', headers: { Authorization: `Bearer ${accessToken}` },
+  });
   if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) throw new Error('A szavazás jelenleg nem érhető el.');
   return response.json();
 }
 
-export function Voting() {
+export function Voting({ accessToken }) {
   const [selected, setSelected] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,11 +19,11 @@ export function Voting() {
 
   useEffect(() => {
     let active = true;
-    requestResults().then(data => { if (active) { setResult(data); if (data.voted) setMessage('Ebből a böngészőből már érkezett szavazat.'); } })
+    requestResults(accessToken).then(data => { if (active) { setResult(data); if (data.voted) setMessage('Ebből a böngészőből már érkezett szavazat.'); } })
       .catch(err => { if (active) { setError(true); setMessage(err.message); } })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
-  }, []);
+  }, [accessToken]);
 
   async function submit(event) {
     event.preventDefault();
@@ -32,19 +34,22 @@ export function Voting() {
     try {
       const response = await fetch('/api/vote', {
         method: 'POST', credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify({ choice: selected }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Nem sikerült menteni a szavazatot.');
       setMessage('Köszönjük, szavazatát rögzítettük!');
-      setResult(await requestResults());
+      setResult(await requestResults(accessToken));
     } catch (err) {
       setError(true);
       setMessage(err.message || 'Nem sikerült menteni a szavazatot.');
-      try { setResult(await requestResults()); } catch { /* Az előző állapot megmarad. */ }
+      try { setResult(await requestResults(accessToken)); } catch { /* Az előző állapot megmarad. */ }
     } finally { setSending(false); }
   }
+
+  if (loading) return <section className="vote-section"><p role="status">Szavazás betöltése…</p></section>;
+  if (!result) return <section className="vote-section"><p role="alert">A szavazás nem érhető el. Kérjük, olvassa be az eseményen kihelyezett QR-kódot, és próbálja újra.</p></section>;
 
   return <section className="vote-section" aria-labelledby="vote-title">
     <h2 id="vote-title">Szavazzon Ön is!</h2>

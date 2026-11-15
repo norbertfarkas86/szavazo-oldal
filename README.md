@@ -13,6 +13,14 @@ npm run dev
 
 A Vite kiírja a helyi címet. A `--host 0.0.0.0` miatt az oldalt ugyanazon a helyi hálózaton másik eszközről is el lehet érni a gép IP-címével és a kiírt porttal.
 
+## QR-kódos szavazás
+
+A szavazás külön oldalon van, amelyre a webhely navigációjából nem mutat hivatkozás. Az eseményen használt QR-kód tartalmazza a hozzáférési azonosítót; a kódot csak a szervezők által megosztani kívánt helyen tedd közzé. A QR-ból kiolvasható hivatkozás továbbadható, a böngészőnkénti szavazáskorlátozás sütit használ, tehát nem személyazonosítás.
+
+A szavazási API csak a megfelelő azonosítóval válaszol. A repositoryban kizárólag az azonosító SHA-256 lenyomata található; a QR-kép és az eredeti azonosító nem része a repositorynak. A hozzáférést szükség esetén új azonosítóhoz tartozó `VOTE_ACCESS_HASH` Cloudflare-környezeti változóval is meg lehet változtatni; ilyen csere után az eredeti QR-kód nem működik.
+
+Az API hozzáférési és szavazási tesztjei: `npm test`. A tesztek elkülönített, memóriában tárolt adatbázist használnak.
+
 ## A szavazás kipróbálása helyben
 
 A szavazatokat D1 adatbázis tárolja. A sima Vite-előnézet önmagában nem indítja el az API-t: ilyenkor a felület jelzi, hogy a szavazás nem érhető el.
