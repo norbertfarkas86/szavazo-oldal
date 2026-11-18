@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { EVENT, navigation, agenda, goals } from '../data/site.js';
+import { EVENT, navigation, agenda, goals, menu } from '../data/site.js';
 import { Flourish, PageHeading, PageEndLink } from '../components/Layout.jsx';
 import { NavIcon } from '../components/NavIcon.jsx';
 import GoalIcon from '../components/GoalIcon.jsx';
@@ -73,8 +73,9 @@ export function Dinner() {
     <div className="dinner-content">
       <p className="dinner-intro">Az est gasztronómiai élményeiről a <strong>Novotel Szeged séfjei</strong> gondoskodnak, akik gondosan összeállított, svédasztalos ételkülönlegességekkel várják vendégeinket.</p>
       <div className="menu-list">
-        {['Előételek', 'Főételek', 'Köretek', 'Desszertek'].map(course => <section className="menu-course" key={course}>
-          <Flourish /><h2>{course}</h2><p>Folyamatban</p>
+        {menu.map(course => <section className="menu-course" key={course.id}>
+          <Flourish /><h2>{course.id}</h2>
+          <ul>{course.meal.map(meal => <li key={meal}>{meal}</li>)}</ul>
         </section>)}
       </div>
       <PageEndLink to="/jegyek.html">Regisztrációs tudnivalók</PageEndLink>
