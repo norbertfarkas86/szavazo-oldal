@@ -171,9 +171,14 @@ export function Tickets() {
     <div className="inner-page">
       <PageHeading
         title="Regisztráció az estére"
-        intro="A Szülői Bálra a jegyek korlátozott számban érhetők el. Regisztrációra az iskola titkárságán biztosítunk lehetőséget."
+        intro="A Szülői Bálra a jegyek korlátozott számban érhetők el, ezért javasoljuk, hogy minél előbb jelezze részvételi szándékát."
       />
       <div className="narrow-content tickets-content">
+        <p className="registration-pending">
+          A regisztrációkét időszakban történik, az iskola titkárságán.
+          <br />
+          <br />
+        </p>
         <div className="registration-card">
           <p className="section-kicker">Első regisztrációs időszak</p>
           <p className="registration-label">Early bird registration</p>
