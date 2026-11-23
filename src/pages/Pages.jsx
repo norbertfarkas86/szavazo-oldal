@@ -175,7 +175,7 @@ export function Tickets() {
       />
       <div className="narrow-content tickets-content">
         <p className="registration-pending">
-          A regisztrációkét időszakban történik, az iskola titkárságán.
+          A regisztráció két időszakban történik, az iskola titkárságán.
           <br />
           <br />
         </p>
